@@ -1,49 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { getDirectChilds, getParentIdNodes } from "./helpers";
+import MyHierarchy from "./MyHierarchy";
 
-import "./my-hierarchy.css";
+const MyHierarchyProvider = ({ hierarchy }) => {
+    const [selectedNode, setSelectedNode] = useState(null);
+    const [openElementsId, setOpenElementsId] = useState(
+        getDirectChilds(hierarchy)
+    );
 
-const MyHierarchy = ({ hierarchy }) => {
-    const [hideElementsId, setHideElementsId] = useState([]);
+    useEffect(() => {
+        if (4184) {
+            const parentsList = getParentIdNodes(hierarchy, 4184);
 
-    const handleNodeSelection = (id) => {
-        const foundedNodeId = hideElementsId.find(
-            (nodeToFind) => nodeToFind === id
-        );
-
-        if (foundedNodeId) {
-            const filteredNodeId = hideElementsId.filter(
-                (nodeToRemove) => nodeToRemove !== id
-            );
-
-            setHideElementsId(filteredNodeId);
-        } else {
-            setHideElementsId([...hideElementsId, id]);
+            console.log(parentsList);
         }
-    };
+    }, []);
 
     return (
         <div>
-            {hierarchy?.map((hierarchyNode, index) => (
-                <ul key={`${hierarchyNode.id}-${index}`}>
-                    <div
-                        className="node-main-container"
-                        onClick={() => handleNodeSelection(hierarchyNode.id)}
-                    >
-                        {hierarchyNode.children?.length > 0 && (
-                            <div className="node-main-container-symbol">
-                                &#x276F;
-                            </div>
-                        )}
-                        <div>{hierarchyNode.label}</div>
-                    </div>
-                    {hierarchyNode.children?.length > 0 &&
-                        !hideElementsId.includes(hierarchyNode.id) && (
-                            <MyHierarchy hierarchy={hierarchyNode.children} />
-                        )}
-                </ul>
-            ))}
+            <MyHierarchy
+                hierarchy={hierarchy}
+                openElementsId={openElementsId}
+                setOpenElementsId={setOpenElementsId}
+                selectedNode={selectedNode}
+                setSelectedNode={setSelectedNode}
+            />
         </div>
     );
 };
 
-export default MyHierarchy;
+export default MyHierarchyProvider;

@@ -6,3 +6,7 @@
 .node-main-container-symbol {
     margin-right: 8px;
 }
+
+.active-node {
+    background-color: cornflowerblue;
+}
