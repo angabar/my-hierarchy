@@ -9,10 +9,9 @@ const MyHierarchyProvider = ({ hierarchy }) => {
     );
 
     useEffect(() => {
-        if (4184) {
-            const parentsList = getParentIdNodes(hierarchy, 4184);
-
-            console.log(parentsList);
+        if (4285) {
+            const parentsList = getParentIdNodes(4285, hierarchy[0]);
+            setOpenElementsId(parentsList);
         }
     }, []);
 

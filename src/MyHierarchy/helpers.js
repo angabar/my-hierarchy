@@ -10,7 +10,7 @@ export const getDirectChilds = (elementsList) => {
     return [];
 };
 
-export const getParentIdNodes = ({ children = [], ...object }, idToFind) => {
+/* export const getParentIdNodes = ({ children = [], ...object }, idToFind) => {
     let result;
 
     if (object.id === idToFind) return object;
@@ -19,4 +19,26 @@ export const getParentIdNodes = ({ children = [], ...object }, idToFind) => {
         children.some((o) => (result = getParentIdNodes(o, idToFind))) &&
         Object.assign({}, object, { children: [result] })
     );
+}; */
+
+export const getParentIdNodes = (id, tree = null) => {
+    const loop = (path, node) =>
+        node.id === id
+            ? [path]
+            : node.children.reduce(
+                  (acc, child) => acc.concat(loop([...path, node], child)),
+                  []
+              );
+
+    const foundedParents = loop([], tree);
+
+    if (
+        foundedParents &&
+        Array.isArray(foundedParents) &&
+        foundedParents.length > 0
+    ) {
+        return foundedParents[0].map((item) => item.id);
+    }
+
+    return [];
 };
