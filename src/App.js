@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react'
 
-import { hierarchy } from "./hierarchy-response/hierarchy";
+import { hierarchy } from './hierarchy-response/hierarchy'
 
-import MyHierarchy from "./MyHierarchy";
+import MyHierarchy from './MyHierarchy'
 
 const App = (props) => {
-    return (
-        <div>
-            <MyHierarchy hierarchy={[hierarchy]} />
-        </div>
-    );
-};
+  return (
+    <div>
+      <MyHierarchy hierarchy={[hierarchy]} />
+    </div>
+  )
+}
 
-export default App;
+export default App
