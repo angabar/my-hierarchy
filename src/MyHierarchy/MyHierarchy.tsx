@@ -1,9 +1,14 @@
-import React, { useState } from 'react'
-import { getDirectChilds } from './helpers'
+import React, { FC } from 'react'
 
 import './my-hierarchy.css'
 
-const MyHierarchy = ({
+const MyHierarchy: FC<{
+  hierarchy
+  openElementsId
+  setOpenElementsId
+  selectedNode
+  setSelectedNode
+}> = ({
   hierarchy,
   openElementsId,
   setOpenElementsId,

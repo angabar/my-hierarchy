@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { FC } from 'react'
 
 import { hierarchy } from './hierarchy-response/hierarchy'
 
 import MyHierarchy from './MyHierarchy'
 
-const App = (props) => {
+const App: FC = () => {
   return (
     <div>
       <MyHierarchy hierarchy={[hierarchy]} />

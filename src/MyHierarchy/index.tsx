@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, FC } from 'react'
 import { getDirectChilds, getParentIdNodes } from './helpers'
 import MyHierarchy from './MyHierarchy'
 
-const MyHierarchyProvider = ({ hierarchy }) => {
+const MyHierarchyProvider: FC<{ hierarchy: any }> = ({ hierarchy }) => {
   const [selectedNode, setSelectedNode] = useState(null)
   const [openElementsId, setOpenElementsId] = useState(
     getDirectChilds(hierarchy),
   )
 
   useEffect(() => {
-    if (4285) {
+    const parentNodes = 4285
+    if (parentNodes === 4285) {
       const parentsList = getParentIdNodes(4285, hierarchy[0])
       setOpenElementsId(parentsList)
     }
-  }, [])
+  }, [hierarchy])
 
   return (
     <div>

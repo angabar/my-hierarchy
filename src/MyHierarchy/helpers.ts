@@ -1,4 +1,4 @@
-export const getDirectChilds = (elementsList) => {
+export const getDirectChilds = (elementsList?: any[]): any[] => {
   if (elementsList && Array.isArray(elementsList) && elementsList.length > 0) {
     return elementsList.map((element) => element.id)
   }
@@ -17,7 +17,7 @@ export const getDirectChilds = (elementsList) => {
     );
 }; */
 
-export const getParentIdNodes = (id, tree = null) => {
+export const getParentIdNodes = (id: number, tree = null): any[] => {
   const loop = (path, node) =>
     node.id === id
       ? [path]
