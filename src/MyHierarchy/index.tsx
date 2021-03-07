@@ -1,28 +1,39 @@
 import React, { useState, useEffect, FC } from 'react'
-import { getDirectChilds, getParentIdNodes } from './helpers'
+import {
+  findNodeById,
+  getDirectChilds,
+  getParentIdNodes,
+  hierarchyDictioanryConstructor,
+} from './helpers'
 import MyHierarchy from './MyHierarchy'
+import {
+  hierarchyDictionaryType,
+  myHierarchyProviderPropsType,
+  nodeType,
+} from './types/types'
 
-const MyHierarchyProvider: FC<{ hierarchy: any }> = ({ hierarchy }) => {
-  const [selectedNode, setSelectedNode] = useState(null)
-  const [openElementsId, setOpenElementsId] = useState(
+const MyHierarchyProvider = ({ hierarchy }: myHierarchyProviderPropsType) => {
+  const [selectedNode, setSelectedNode] = useState<nodeType | null>(null)
+  const [
+    hierarchyDictionary,
+    setHierarchyDictionary,
+  ] = useState<hierarchyDictionaryType>({})
+  const [openElementsId, setOpenElementsId] = useState<number[]>(
     getDirectChilds(hierarchy),
   )
 
   useEffect(() => {
-    const hierarchyDictionaryResult = hierarchyDictioanryConstructor(
-        hierarchy
-    );
+    const hierarchyDictionaryResult = hierarchyDictioanryConstructor(hierarchy)
 
-    setHierarchyDictionary(hierarchyDictionaryResult);
+    setHierarchyDictionary(hierarchyDictionaryResult)
 
-    if (4285) {
-        const parentsList = getParentIdNodes(
-            hierarchyDictionaryResult,
-            4285
-        );
+    const tempNode = 4285
 
-        setOpenElementsId(parentsList);
-        setSelectedNode(findNodeById(hierarchyDictionaryResult, 4285));
+    if (tempNode) {
+      const parentsList = getParentIdNodes(hierarchyDictionaryResult, 4285)
+
+      setOpenElementsId(parentsList)
+      setSelectedNode(findNodeById(hierarchyDictionaryResult, 4285))
     }
   }, [hierarchy])
 

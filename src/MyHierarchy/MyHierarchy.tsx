@@ -1,26 +1,23 @@
 import React, { FC } from 'react'
 
 import './my-hierarchy.css'
+import { myHierarchyPropsType, nodeType } from './types/types'
 
-const MyHierarchy: FC<{
-  hierarchy
-  openElementsId
-  setOpenElementsId
-  selectedNode
-  setSelectedNode
-}> = ({
+const MyHierarchy = ({
   hierarchy,
   openElementsId,
   setOpenElementsId,
   selectedNode,
   setSelectedNode,
-}) => {
-  const handleNodeSelection = (id) => {
-    const foundedNodeId = openElementsId.find((nodeToFind) => nodeToFind === id)
+}: myHierarchyPropsType) => {
+  const handleNodeSelection = (id: number) => {
+    const foundedNodeId = openElementsId.find(
+      (nodeToFind: number) => nodeToFind === id,
+    )
 
     if (foundedNodeId) {
       const filteredNodeId = openElementsId.filter(
-        (nodeToRemove) => nodeToRemove !== id,
+        (nodeToRemove: number) => nodeToRemove !== id,
       )
 
       setOpenElementsId(filteredNodeId)
@@ -31,7 +28,7 @@ const MyHierarchy: FC<{
 
   return (
     <div>
-      {hierarchy?.map((hierarchyNode, index) => (
+      {hierarchy?.map((hierarchyNode: nodeType, index: number) => (
         <ul key={`${hierarchyNode.id}-${index}`}>
           <div className="node-main-container">
             {hierarchyNode.children?.length > 0 && (
