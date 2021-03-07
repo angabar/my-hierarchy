@@ -1,6 +1,6 @@
 import { hierarchyDictionaryType, nodeType } from './types/types'
 
-export const safeArrayAccesor = (arrayToCheck: any[]): boolean => {
+export const safeArrayAccesor = (arrayToCheck: unknown[]): boolean => {
   return arrayToCheck && Array.isArray(arrayToCheck) && arrayToCheck.length > 0
 }
 
@@ -66,7 +66,7 @@ export const hierarchyDictioanryConstructor = (
 export const getParentIdNodes = (
   hierarchyDictionary: hierarchyDictionaryType,
   dmaId: number,
-) => {
+): number[] => {
   const parentList: number[] = []
   let parentId: number | null = dmaId
   const parentHierarchyNode: nodeType | null = findParentHierarchy(

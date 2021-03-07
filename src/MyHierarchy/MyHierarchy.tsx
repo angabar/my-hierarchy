@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React from 'react'
 
 import './my-hierarchy.css'
 import { myHierarchyPropsType, nodeType } from './types/types'
@@ -10,7 +10,7 @@ const MyHierarchy = ({
   selectedNode,
   setSelectedNode,
 }: myHierarchyPropsType) => {
-  const handleNodeSelection = (id: number) => {
+  const handleNodeSelection = (id: number): void => {
     const foundedNodeId = openElementsId.find(
       (nodeToFind: number) => nodeToFind === id,
     )
