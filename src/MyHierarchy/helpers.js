@@ -45,18 +45,24 @@ export const findNodeById = (hierarchyDictionary, nodeId) => {
     return null;
 };
 
+/**
+ * a function to return direct child ids
+ * @param {any[]} elementsList - a list of elements with ids
+ * @returns any[]
+ */
 export const getDirectChilds = (elementsList) => {
-    if (
-        elementsList &&
-        Array.isArray(elementsList) &&
-        elementsList.length > 0
-    ) {
+    if (safeArrayAccesor(elementsList)) {
         return elementsList.map((element) => element.id);
     }
 
     return [];
 };
 
+/**
+ * a function that converts hierarchy array into dictionary
+ * @param {any[]} hierarchy - a hierarchy array of elements
+ * @returns Object
+ */
 export const hierarchyDictioanryConstructor = (hierarchy) => {
     const hierarchyDictionary = {};
 
@@ -77,6 +83,12 @@ export const hierarchyDictioanryConstructor = (hierarchy) => {
     return hierarchyDictionary;
 };
 
+/**
+ * a function to find all parentId of argument
+ * @param {Object} hierarchyDictionary - a hierarchy dictionary
+ * @param {number} dmaId - an id of node to find
+ * @returns number[]
+ */
 export const getParentIdNodes = (hierarchyDictionary, dmaId) => {
     let parentList = [];
     let parentId = dmaId;
