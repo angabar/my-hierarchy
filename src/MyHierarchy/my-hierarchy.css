@@ -1,12 +1,12 @@
 .node-main-container {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .node-main-container-symbol {
-    margin-right: 8px;
+  margin-right: 8px;
 }
 
 .active-node {
-    background-color: cornflowerblue;
+  background-color: cornflowerblue;
 }
