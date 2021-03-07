@@ -1,3 +1,50 @@
+/**
+ * a funtion that return a conditional that check if element is an array and its
+ * lenght is greater than 0
+ * @param {any[]} arrayToCheck - a list of elements
+ * @returns boolean
+ */
+export const safeArrayAccesor = (arrayToCheck) => {
+    return (
+        arrayToCheck && Array.isArray(arrayToCheck) && arrayToCheck.length > 0
+    );
+};
+
+/**
+ * a function that returns the parent of all nodes
+ * @param {Object} hierarchyDictionary - a hierarchy dictionary
+ * @returns hierarchyNode | null
+ */
+export const findParentHierarchy = (hierarchyDictionary) => {
+    const parentNode = Object.values(hierarchyDictionary).find(
+        (node) => !node.parentId
+    );
+
+    if (parentNode) {
+        return parentNode;
+    }
+
+    return null;
+};
+
+/**
+ * a function that returns a node hierarchy
+ * @param {Object} hierarchyDictionary - a hierarchyDictionary
+ * @param {Object} nodeId - a node to find
+ * @returns hierarchyNode | null
+ */
+export const findNodeById = (hierarchyDictionary, nodeId) => {
+    const foundedNode = Object.values(hierarchyDictionary).find(
+        (node) => node.id === nodeId
+    );
+
+    if (foundedNode) {
+        return foundedNode;
+    }
+
+    return null;
+};
+
 export const getDirectChilds = (elementsList) => {
     if (
         elementsList &&
@@ -10,35 +57,43 @@ export const getDirectChilds = (elementsList) => {
     return [];
 };
 
-/* export const getParentIdNodes = ({ children = [], ...object }, idToFind) => {
-    let result;
+export const hierarchyDictioanryConstructor = (hierarchy) => {
+    const hierarchyDictionary = {};
 
-    if (object.id === idToFind) return object;
+    const hierarchyRecursiveSearcher = (nodeList) => {
+        if (safeArrayAccesor(nodeList)) {
+            nodeList.forEach((node) => {
+                hierarchyDictionary[node.id] = node;
 
-    return (
-        children.some((o) => (result = getParentIdNodes(o, idToFind))) &&
-        Object.assign({}, object, { children: [result] })
-    );
-}; */
+                if (safeArrayAccesor(node.children)) {
+                    hierarchyRecursiveSearcher(node.children);
+                }
+            });
+        }
+    };
 
-export const getParentIdNodes = (id, tree = null) => {
-    const loop = (path, node) =>
-        node.id === id
-            ? [path]
-            : node.children.reduce(
-                  (acc, child) => acc.concat(loop([...path, node], child)),
-                  []
-              );
+    hierarchyRecursiveSearcher(hierarchy);
 
-    const foundedParents = loop([], tree);
+    return hierarchyDictionary;
+};
 
-    if (
-        foundedParents &&
-        Array.isArray(foundedParents) &&
-        foundedParents.length > 0
-    ) {
-        return foundedParents[0].map((item) => item.id);
+export const getParentIdNodes = (hierarchyDictionary, dmaId) => {
+    let parentList = [];
+    let parentId = dmaId;
+    let parentHierarchyNode = findParentHierarchy(hierarchyDictionary);
+
+    while (parentId) {
+        const parentIdFounded = hierarchyDictionary[parentId].parentId;
+
+        if (parentIdFounded) {
+            parentList.unshift(parentIdFounded);
+        }
+
+        parentId = parentIdFounded;
     }
 
-    return [];
+    parentList.push(dmaId);
+    parentList.unshift(parentHierarchyNode.id);
+
+    return parentList;
 };

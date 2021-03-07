@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { getDirectChilds, getParentIdNodes } from "./helpers";
+import {
+    findNodeById,
+    getDirectChilds,
+    getParentIdNodes,
+    hierarchyDictioanryConstructor,
+} from "./helpers";
 import MyHierarchy from "./MyHierarchy";
 
 const MyHierarchyProvider = ({ hierarchy }) => {
@@ -7,11 +12,23 @@ const MyHierarchyProvider = ({ hierarchy }) => {
     const [openElementsId, setOpenElementsId] = useState(
         getDirectChilds(hierarchy)
     );
+    const [hierarchyDictionary, setHierarchyDictionary] = useState({});
 
     useEffect(() => {
+        const hierarchyDictionaryResult = hierarchyDictioanryConstructor(
+            hierarchy
+        );
+
+        setHierarchyDictionary(hierarchyDictionaryResult);
+
         if (4285) {
-            const parentsList = getParentIdNodes(4285, hierarchy[0]);
+            const parentsList = getParentIdNodes(
+                hierarchyDictionaryResult,
+                4285
+            );
+
             setOpenElementsId(parentsList);
+            setSelectedNode(findNodeById(hierarchyDictionaryResult, 4285));
         }
     }, []);
 
